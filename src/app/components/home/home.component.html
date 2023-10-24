@@ -1,0 +1,19 @@
+<div class="container-fluid">
+  <div class="row">
+    <div
+        *ngFor="let product of products"
+        class="col-3 border rounded p-2 bg-secondary-subtle border-primary-subtle  mx-5 my-4"
+      >
+        <img
+            src="{{product.image}}"
+            alt="image"
+            style="min-width: 100px; height: 100px"
+          />
+        <p class="fs-5 my-1 mt-2 text-center">{{ product.title }}</p>
+        <p class="fs-4 my-1 mb-2 text-center">₹ {{ product.price }}</p>
+        <div class="btn btn-warning" (click)="addToCart(product.id)">
+          Add to Cart
+        </div>
+      </div>
+  </div>
+</div>
