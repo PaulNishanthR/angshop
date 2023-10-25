@@ -1,29 +1,33 @@
-<!-- <p>cart works!</p> -->
-
-<div
-  class="container my-5 background-color: rgb(68, 205, 223) border=5px solid black"
->
-  <div id="emptyCart">
-    <!-- <p class="fs-2">You don't have any products</p> -->
-  </div>
-  <div id="table">
-    <table class="table table-bordered">
+<div class="container my-4">
+  <div class="row">
+    <table class="table table-striped">
       <thead>
         <tr>
-          <th scope="col">title</th>
-          <th scope="col">count</th>
+          <th scope="col">Product</th>
+          <th scope="col">Quantity</th>
           <th scope="col">Price</th>
-          <!-- <th scope="col">Total Amount</th> -->
+          <th scope="col">Total</th>
         </tr>
       </thead>
-      <tbody id="cartTableBody"></tbody>
+      <tbody *ngFor="let item of cartProducts" id="tablebody">
+        <tr>
+          <td>{{ item.title }}</td>
+          <td>{{ item.count }}</td>
+          <td>{{ item.price }}</td>
+          <td>{{ item.count !* item.price }}</td>
+        </tr>
+      </tbody>
     </table>
-    <p class="fs-5 text" id="total">Total-₹</p>
-    <div class="d-flex justify-content">
-      <!-- <a href="/E-Shopping/cart.html"> -->
-      <button class="btn btn-warning border:3px solid black">
-        Go to products
-      </button>
+    <div class="container-fluid d-flex flex-row-reverse w-10">
+      <div class="col-3">
+        <button
+          type="button"
+          (click)="clearcart()"
+          class="btn btn-primary px-3 me-2"
+        >
+          Checkout
+        </button>
+      </div>
     </div>
   </div>
 </div>

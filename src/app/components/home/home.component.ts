@@ -37,8 +37,6 @@ export class HomeComponent implements OnInit {
   }
   addToCart(id: number): void {
     this.cartService.addToCart(id);
-  //   JSON.parse(localStorage.getItem('cart')as string);
-  //   this.storageService.getCart();
-  // }
+  
 }
 }

@@ -17,20 +17,6 @@ export class ProductserviceService {
     return this.http.get<Product[]>('https://fakestoreapi.com/products');
   }
 
-  // getCachedProducts():Product[]{
-  //   this.getAllProducts().subscribe({
-  //     next:(products:Product[])=>{
-
-  //       this.storageService.saveProducts(products);
-  //     },
-  //     complete:()=>{},
-  //     error:(_error:Error)=>{
-  //       this.storageService.saveProducts([]);
-  //     },
-  //   });
-  //   return this.storageService.getCachedProducts()
-  // }
-
   saveProducts(products: Product[]) {
     this.storageService.saveProducts(products);
   }

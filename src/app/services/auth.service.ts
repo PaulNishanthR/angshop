@@ -36,7 +36,7 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    return this.storageService.isUserLoggedIn();
+    return this.storageService.isLoggedInUser();
   }
 
   logout(): void {

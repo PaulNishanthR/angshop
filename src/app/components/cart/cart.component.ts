@@ -1,18 +1,26 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Product } from 'src/app/models/product';
 import { CartService } from 'src/app/services/cart.service';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css'],
 })
-export class CartComponent implements OnInit {
-  cartProducts: Product[] = [];
+export class CartComponent {
+  cart: Product[] = [];
+  constructor(
+    private cartservice: CartService,
+    private storageService: StorageService,
+    private router: Router
+  ) {}
 
-  constructor(private cartService: CartService) {}
+  cartProducts = this.storageService.getCartProducts();
 
-  ngOnInit(): void {
-    this.cartProducts=this.cartService.getCart();
+  clearcart() {
+    this.storageService.clearcart();
+    this.router.navigate(['home'], { replaceUrl: true });
   }
 }

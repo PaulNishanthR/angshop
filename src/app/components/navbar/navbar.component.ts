@@ -20,8 +20,10 @@ export class NavbarComponent {
     this.router.navigate(['/login'], { replaceUrl: true });
   }
 
-  // getCount(): number {
-  //   let count = this.cartService.getCount();
-  //   return count > 0 ? count : 0;
-  // }
+  getcount(): number {
+    
+    let count = this.cartService.getCartCount();
+
+    return count;
+  }
 }

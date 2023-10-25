@@ -1,61 +1,46 @@
 import { Injectable } from '@angular/core';
 import { StorageService } from './storage.service';
 import { Product } from '../models/product';
-import { Cart } from '../models/cart';
-import { User } from '../models/user';
-import { AuthService } from './auth.service';
-import { Observable, count } from 'rxjs';
-import { ProductserviceService } from './productservice.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
-  cart: Product[] = [];
+  private cart: Product[] = [];
 
-  constructor(
-    private storageService: StorageService,
-    private authService: AuthService,
-    private productserviceService: ProductserviceService
-  ) {}
+  constructor(private storageService: StorageService) {}
 
-  // addToCart(id: number) {
-  //   let cart: Cart[] = this.storageService.getCart();
+  addToCart(id: number): void {
+    const products = this.storageService.getCachedProducts();
+    const clickedProduct = products.find((prod) => prod.id === id);
 
-  //   if (cart === null) {
-  //     cart = [];
-  //   }
-  //   console.log(cart);
+    if (clickedProduct) {
+      const existingCartItem = this.cart.find((item) => item.id === id);
 
-  //   return cart;
-  // }
+      if (!existingCartItem) {
+        this.cart.push({ ...clickedProduct, id: id, count: 1 });
+      } else {
+        existingCartItem.count = (existingCartItem.count || 0) + 1;
+      }
 
-  addToCart(id: number): void {}
-  //   const products = this.storageService.getCachedProducts();
-  //   const user = this.storageService.getLoggedInUser();
-  //   let cart = this.storageService.getCart();
-  //   const clickedProduct = products.find((prod) => prod.id === id);
+      this.storageService.loadCartProducts(this.cart);
+    }
+  }
 
-  //   if (clickedProduct) {
-  //     let existingCartItem = cart.find((item) => item.id === id);
+  getCartProducts(): Product[] {
+    return this.cart;
+  }
 
-  //     if (!existingCartItem) {
-  //       cart.push({ ...clickedProduct, id: id, count: 1 });
-  //     } else {
-  //       cart = cart.map((item) => {
-  //         if (item.id === id) {
-  //           return { ...item, count: (item.count || 0) + 1 };
-  //         } else {
-  //           return item;
-  //         }
-  //       });
-  //     }
+  getCartCount(): number {
+    let count: number = 0;
+    const cartProducts = this.storageService.getCartProducts();
 
-  //     this.storageService.loadCartProducts(cart);
-  //   }
-  // }
+    for (let product of cartProducts) {
+      if (product.count) {
+        count += product.count;
+      }
+    }
 
-  getCart(): Product[] {
-    return this.storageService.getCart();
+    return count;
   }
 }

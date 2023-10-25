@@ -1,61 +1,83 @@
 import { Injectable } from '@angular/core';
 import { User } from '../models/user';
 import { Product } from '../models/product';
-import { JsonPipe } from '@angular/common';
 import { Cart } from '../models/cart';
-import { ProductserviceService } from './productservice.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StorageService {
-  constructor() {}
-
-  private users: User[] = [
-    { id: 1, email: 'user1@user.com', password: 'user1' },
+  users: User[] = [
+    {
+      id: 1,
+      email: 'user1@user.com',
+      password: 'hello',
+    },
   ];
+
+  constructor() {}
 
   loadUsers() {
     if (!localStorage.getItem('users')) {
       localStorage.setItem('users', JSON.stringify(this.users));
     }
   }
+
   getAllUsers(): User[] {
-    return JSON.parse(localStorage.getItem('users') as string);
+    return JSON.parse(localStorage.getItem('users') || '[]');
   }
 
-  setLoggedInUser(user: User): void {
-    localStorage.setItem('loggedInUser', JSON.stringify(user));
-  }
-  getLoggedInUser(): User {
-    return JSON.parse(localStorage.getItem('loggedInUser') as string);
+  setLoggedInUser(user: User) {
+    localStorage.setItem('user', JSON.stringify(user));
   }
 
-  removeLoggedInUser(): void {
-    localStorage.removeItem('loggedInUser');
+  removeLoggedInUser() {
+    localStorage.removeItem('user');
   }
 
-  isUserLoggedIn(): boolean {
-    return localStorage.getItem('loggedInUser') !== null;
+  isLoggedInUser() {
+    return localStorage.getItem('user') !== null;
   }
+
+  getLoggedInUser(): User | null {
+    return JSON.parse(localStorage.getItem('user') || 'null');
+  }
+
   saveProducts(products: Product[]): void {
     localStorage.setItem('products', JSON.stringify(products));
   }
-  setCachedProducts(products: Product[]): void {
-    if (!localStorage.getItem('products'))
-      localStorage.setItem('products', JSON.stringify(products));
+
+  SetCart(cart: Cart[]): void {
+    if (!localStorage.getItem('cart')) {
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
   }
 
   getCachedProducts(): Product[] {
-    return JSON.parse(localStorage.getItem('products') as string);
+    return JSON.parse(localStorage.getItem('products') || '[]');
   }
-  setCart(): Cart[] {
-    return [];
-  }
+
   loadCartProducts(cart: Product[]): void {
     localStorage.setItem('cart', JSON.stringify(cart));
   }
-  getCart() {
+
+  getCartProducts(): Product[] {
     return JSON.parse(localStorage.getItem('cart') as string);
+  }
+
+  clearcart() {
+    let order: Product[] = JSON.parse(localStorage.getItem('cart') as string);
+    localStorage.setItem('order', JSON.stringify(order) as string);
+    return localStorage.setItem('cart', JSON.stringify([]) as string);
+  }
+
+  SetProducts(products: Product[]): void {
+    if (!localStorage.getItem('products')) {
+      localStorage.setItem('products', JSON.stringify(products));
+    }
+  }
+
+  getorder() {
+    return JSON.parse(localStorage.getItem('order') as string);
   }
 }

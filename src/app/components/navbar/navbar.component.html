@@ -26,11 +26,9 @@
           <a class="nav-link" routerLink="/register">Register</a>
         </li>
 
-        <!-- <li class="nav-item">
-          <a class="nav-link" routerLink="/cart"
-            >Cart {{ getCount() > 0 ? getCount() : "" }}</a
-          >
-        </li> -->
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/cart">Cart {{ getcount() }}</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" (click)="logout()">Logout</a>
         </li>
